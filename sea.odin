@@ -5,13 +5,12 @@ import "core:fmt"
 import "entities"
 
 main :: proc() {
-    chunk : entities.Chunk
-    entities.add_operation(&chunk, entities.Operation.RETURN)
+	chunk: entities.Chunk
+	entities.add_operation(&chunk, entities.Operation.RETURN, 11)
 	for operation in chunk.operations {
-        process_instruction(operation)
+		process_instruction(operation)
 	}
 }
-
 
 process_instruction :: proc(operation: entities.Operation) {
 	using entities.Operation
