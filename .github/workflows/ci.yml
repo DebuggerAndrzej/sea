@@ -1,0 +1,44 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      -uses: actions/checkout@v4
+
+      - name: Setup Odin dependencies
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 17
+          echo "/usr/lib/llvm-17/bin" >> $GITHUB_PATH
+
+      - name: Build Odin
+        run: |
+          git clone --depth 1 https://github.com/odin-lang/Odin
+          cd Odin && ./build_odin.sh release
+
+      - name: Build Project
+        run: odin build .
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      -uses: actions/checkout@v4
+
+      - name: Setup Odin dependencies
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh 17
+          echo "/usr/lib/llvm-17/bin" >> $GITHUB_PATH
+
+      - name: Build Odin
+        run: |
+          git clone --depth 1 https://github.com/odin-lang/Odin
+          cd Odin && ./build_odin.sh release
+
+      - name: Build Project
+        run: odin test tests.odin -file --all-packages
