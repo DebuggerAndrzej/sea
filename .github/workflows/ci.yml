@@ -6,8 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      -uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Setup Odin dependencies
         run: |
           wget https://apt.llvm.org/llvm.sh
@@ -19,14 +18,14 @@ jobs:
         run: |
           git clone --depth 1 https://github.com/odin-lang/Odin
           cd Odin && ./build_odin.sh release
-
+          
       - name: Build Project
-        run: odin build .
+        run: Odin/odin build .
 
   test:
     runs-on: ubuntu-latest
     steps:
-      -uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Setup Odin dependencies
         run: |
@@ -39,6 +38,6 @@ jobs:
         run: |
           git clone --depth 1 https://github.com/odin-lang/Odin
           cd Odin && ./build_odin.sh release
-
+          
       - name: Build Project
-        run: odin test tests.odin -file --all-packages
+        run: Odin/odin test tests.odin -file --all-packages
