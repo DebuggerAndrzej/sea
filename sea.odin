@@ -3,25 +3,11 @@ package main
 import "core:fmt"
 
 import "entities"
+import "virtual_machine"
 
 main :: proc() {
 	chunk: entities.Chunk
-	entities.add_operation(&chunk, entities.Operation.RETURN, 11)
-	for operation in chunk.operations {
-		process_instruction(operation)
-	}
-}
-
-process_instruction :: proc(operation: entities.Operation) {
-	using entities.Operation
-	switch operation {
-	case RETURN:
-		simple_instruction("RETURN")
-	case CONSTANT:
-		simple_instruction("CONSTANT")
-	}
-}
-
-simple_instruction :: proc(instruction: string) {
-	fmt.println(instruction)
+	entities.add_operation(&chunk, entities.Operation.CONSTANT, 12)
+	entities.add_value(&chunk, 1.2)
+	virtual_machine.interpret(&chunk)
 }
